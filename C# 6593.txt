@@ -1,0 +1,72 @@
+ //This  is a  demo  project
+ private void btn1_Click(object sender, EventArgs e)
+        {
+            connection.Open();
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "insert into [Table](First Name,Email.Telephone,Gender,Grade)values('" + txt2.Text + "','" + txt3.Text + "'," + int.Parse(txt4.Text) + ",'" + txt5.Text + "','" + txt6.Text + "')";
+            connection.Close();            
+            txt1.Text = "";
+            txt2.Text = "";
+            txt3.Text = "";
+            txt4.Text = "";
+            txt5.Text = "";
+            display_data();
+            MessageBox.Show("Data Successfully Entered!!","Approval Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        }
+        public void display_data()
+        {
+            connection.Open();
+            SqlCommand cmd = connection.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select * from [Table]";
+            DataTable dta = new DataTable();
+            SqlDataAdapter dataadp = new SqlDataAdapter(cmd);
+            dataadp.Fill(dta);
+            dataGridView1.DataSource = dta;
+            connection.Close();
+        }
+
+        private void btn5_Click(object sender, EventArgs e)
+        {
+            display_data();
+        }
+
+        private void btn2_Click(object sender, EventArgs e)
+        {
+            {
+                connection.Open();
+                SqlCommand cmd = connection.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "delete from [Table] where email ='" + txt3.Text + "'";
+                connection.Close();                
+                txt1.Text = "";
+                txt2.Text = "";
+                txt3.Text = "";
+                txt4.Text = "";
+                txt5.Text = "";
+                display_data();
+                MessageBox.Show("Data Successfully Deleted!!", "Approval Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btn3_Click(object sender, EventArgs e)
+        {
+            {
+                connection.Open();
+                SqlCommand cmd = connection.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "update [Table] set email ='" + txt3.Text + "' where email='" + txt2.Text + "'";
+                cmd.ExecuteNonQuery();
+                connection.Close();               
+                txt1.Text = "";
+                txt2.Text = "";
+                txt3.Text = "";
+                txt4.Text = "";
+                txt5.Text = "";
+                display_data();
+                MessageBox.Show("Data Successfully Updated!!", "Approval Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+    }
+}
